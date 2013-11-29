@@ -1,6 +1,3 @@
-Erlang.PortIO
-=============
-
 
 KEYWORDS
 
@@ -21,8 +18,8 @@ Win7, MSVS2012, boost_1_55_0, R16B(erts-5.10.1)
 SUPPLIED
 
 Src - contains 3 files for read\write terms and parsing from\to raw binary. Supporting almost all base terms.
-		Other terms (like fun, pid and etc if needed) can be transformed to binary using BIF term_to_binary() 
-		and	binary_to_term().
+Other terms (like fun, pid and etc if needed) can be transformed to binary using BIF term_to_binary() 
+and	binary_to_term().
 Example/ErlPort - contains VS solution to create exe as port for Erlang client.
 Example/ErlClient - contains Erlang source file as client to use port.
 
@@ -30,13 +27,10 @@ Example/ErlClient - contains Erlang source file as client to use port.
 EXAMPLE
 
 // Suspend While Read Buffer
-
 ErrorInfo rei;
 byte Buffer[MAX_MESSAGE_LENGTH] = { 0 };
 UInt16 size = Stream::Read2(Buffer, &rei); 
-
 // Read the Command Id and DS (Digital Sign)
-
 Erlang::ETFReader er(Buffer, size);
 unsigned tupleSize = er.ReadTuple();
 int command = er.ReadNumber<int>();
@@ -85,3 +79,15 @@ to another node via ports.
 Master-Slave
 Sometimes it is need to make port as Master but Erlang side as Slave. There is no problem to do it, just
 make Erlang side as command listener.
+
+
+HOW TO DEBUG
+
+- open Erlang console and cd("Erlang.PortIO/example/ErlClient").
+- c(client).
+- client:start([]).
+- open VS solutiona and attach to process ErlPort
+- set a breakpoint you would like
+- client:ping().
+
+If everything is ok - bp will hit.
