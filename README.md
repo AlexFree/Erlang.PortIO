@@ -30,10 +30,13 @@ Example/ErlClient - contains Erlang source file as client to use port.
 EXAMPLE
 
 // Suspend While Read Buffer
+
 ErrorInfo rei;
 byte Buffer[MAX_MESSAGE_LENGTH] = { 0 };
 UInt16 size = Stream::Read2(Buffer, &rei); 
+
 // Read the Command Id and DS (Digital Sign)
+
 Erlang::ETFReader er(Buffer, size);
 unsigned tupleSize = er.ReadTuple();
 int command = er.ReadNumber<int>();
